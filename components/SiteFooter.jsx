@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 const name = "EXOTIC";
 
-export default function SiteFooter({ refined = false }) {
+export default function SiteFooter({ refined = false, editorialMobile = false }) {
   const footerRef = useRef(null);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function SiteFooter({ refined = false }) {
   }, [refined]);
 
   return (
-    <footer className={`site-footer${refined ? " footer-refined" : ""}`} aria-label="Site footer" ref={footerRef}>
+    <footer className={`site-footer${refined ? " footer-refined" : ""}${editorialMobile ? " footer-editorial-mobile" : ""}`} aria-label="Site footer" ref={footerRef}>
       <div className="footer-inner">
         <h2 className="footer-name" aria-label="Exotic Lotus Infotech">
           <span className="footer-name-primary" aria-hidden="true">
@@ -97,8 +97,10 @@ export default function SiteFooter({ refined = false }) {
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Exotic Lotus Infotech</p>
           <nav className="footer-links" aria-label="Footer links">
+            {editorialMobile && <span className="footer-mobile-label">Explore</span>}
             <a href="#core-services">{refined ? "Services" : "Core Services"}</a>
             <a href="#why-we-build">{refined ? "Our approach" : "Why We Build"}</a>
+            {editorialMobile && <span className="footer-mobile-label">Connect</span>}
             <a href="https://www.instagram.com/exoticlotus.tech/" target="_blank" rel="noopener noreferrer">
               Instagram <span aria-hidden="true">↗</span>
             </a>

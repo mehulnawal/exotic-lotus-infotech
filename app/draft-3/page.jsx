@@ -28,7 +28,7 @@ export default function HeroDraftPage() {
           <ScrollRevealStatement controlled />
         </ScrollJourney>
       </main>
-      <SiteFooter refined />
+      <SiteFooter refined editorialMobile />
     </div>
   );
 }
