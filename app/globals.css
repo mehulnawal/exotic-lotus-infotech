@@ -1216,6 +1216,7 @@ body {
   .draft-two .statement-heading {
     width: 100%;
     max-width: none;
+    text-align: center;
     text-wrap: wrap;
   }
 
