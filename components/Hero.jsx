@@ -11,7 +11,7 @@ export default function Hero() {
     props: { srcSet: desktopSrcSet },
   } = getImageProps({
     ...commonImageProps,
-    src: "/hero/hero-lotus-desktop.png",
+    src: "/hero/hero-lotus-desktop.webp",
     width: 1672,
     height: 941,
   });
@@ -20,7 +20,7 @@ export default function Hero() {
     props: { srcSet: mobileSrcSet, ...mobileImageProps },
   } = getImageProps({
     ...commonImageProps,
-    src: "/hero/hero-lotus-mobile.png",
+    src: "/hero/hero-lotus-mobile.webp",
     width: 1254,
     height: 1254,
   });

@@ -8,28 +8,28 @@ const services = [
     title: "CRM & ERP Solutions",
     description:
       "Organize customer, team, and operational work in systems shaped around your processes.",
-    image: "/services/crm-erp-product.png",
+    image: "/services/crm-erp-product.webp",
     imageAlt: "Connected customer, operations, and analytics panels",
   },
   {
     title: "SaaS & Custom Software",
     description:
       "Develop a focused platform or product for workflows that off-the-shelf tools cannot fit.",
-    image: "/services/saas-custom-product.png",
+    image: "/services/saas-custom-product.webp",
     imageAlt: "Custom software platform with connected modules",
   },
   {
     title: "AI & Business Automation",
     description:
       "Connect tools and reduce repetitive tasks with carefully designed automation.",
-    image: "/services/ai-automation-product.png",
+    image: "/services/ai-automation-product.webp",
     imageAlt: "Automated workflow connecting inputs to business tasks",
   },
   {
     title: "Web & Mobile Applications",
     description:
       "Put the right experience in the hands of teams and customers, wherever they work.",
-    image: "/services/web-mobile-product.png",
+    image: "/services/web-mobile-product.webp",
     imageAlt: "Web dashboard and mobile application displayed together",
   },
 ];

@@ -26,6 +26,7 @@ export default function SiteFooter({ refined = false }) {
         ? Math.max(window.innerHeight * 0.52, window.innerHeight - footer.offsetHeight + 50)
         : Math.max(window.innerHeight * 0.2, window.innerHeight - footer.offsetHeight);
       const top = footer.getBoundingClientRect().top;
+      if (top >= start && displayedProgress === 0) return;
       const targetProgress = Math.max(0, Math.min(1, (start - top) / Math.max(1, start - end)));
       if (refined) {
         const elapsed = previousFrameTime ? time - previousFrameTime : 16;

@@ -36,6 +36,7 @@ export default function ScrollJourney({ children }) {
     let updateFrame = 0;
     let measureFrame = 0;
     let lastTextProgress = -1;
+    let lastActiveRows = -1;
     let lastRowReveals = [];
 
     function reset() {
@@ -60,9 +61,13 @@ export default function ScrollJourney({ children }) {
       const routeProgress = clamp((scroll - geometry.routeStart) / geometry.routeDistance);
       const dashOffset = String(geometry.pathLength * (1 - routeProgress));
       if (route.style.strokeDashoffset !== dashOffset) route.style.strokeDashoffset = dashOffset;
-      rows.forEach((row, index) => {
-        row.classList.toggle("is-active", routeProgress > 0 && routeProgress >= index / (rows.length - 1));
-      });
+      const activeRows = routeProgress > 0
+        ? Math.min(rows.length, Math.floor(routeProgress * (rows.length - 1)) + 1)
+        : 0;
+      if (activeRows !== lastActiveRows) {
+        rows.forEach((row, index) => row.classList.toggle("is-active", index < activeRows));
+        lastActiveRows = activeRows;
+      }
 
       let x = geometry.artX;
       let y = geometry.artY;
@@ -246,6 +251,7 @@ export default function ScrollJourney({ children }) {
       scene.classList.add("is-journey-ready");
       heading.classList.add("is-ready");
       lastTextProgress = -1;
+      lastActiveRows = -1;
       lastRowReveals = [];
       displayedScroll = window.scrollY;
       previousFrameTime = 0;
