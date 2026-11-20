@@ -1,0 +1,8 @@
+node_modules/
+.next/
+out/
+.pnpm-store/
+*.log
+.env*
+!.env.example
+.codex-attachments/
