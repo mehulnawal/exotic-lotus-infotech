@@ -42,6 +42,32 @@ export default function HeroWave() {
           strokeWidth="2"
         />
       </svg>
+      <svg
+        className="hero-wave-backdrop hero-wave-backdrop-mobile"
+        viewBox="0 0 390 740"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="hero-wave-mobile-front" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#eee0f8" stopOpacity=".12" />
+            <stop offset=".65" stopColor="#cfb3ee" stopOpacity=".45" />
+            <stop offset="1" stopColor="#e6d5f6" stopOpacity=".25" />
+          </linearGradient>
+          <linearGradient id="hero-wave-mobile-back" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#efe0f7" stopOpacity=".08" />
+            <stop offset="1" stopColor="#d2b3ed" stopOpacity=".32" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M0 570 C80 590 120 525 199 551 C275 577 302 542 390 515 L390 740 L0 740 Z"
+          fill="url(#hero-wave-mobile-back)"
+        />
+        <path
+          d="M0 636 C90 665 126 610 213 626 C302 643 327 610 390 581 L390 740 L0 740 Z"
+          fill="url(#hero-wave-mobile-front)"
+        />
+      </svg>
       <Hero secondaryAction />
     </div>
   );

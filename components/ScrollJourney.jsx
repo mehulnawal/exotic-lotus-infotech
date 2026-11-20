@@ -26,6 +26,7 @@ export default function ScrollJourney({ children }) {
     const heading = statement?.querySelector(".statement-heading");
     const words = Array.from(heading?.querySelectorAll("[data-reveal-word]") ?? []);
     const rows = Array.from(scene?.querySelectorAll("[data-service-row]") ?? []);
+    const editorialReveal = Boolean(scene?.closest(".draft-three"));
     if (!scene || !art || !flow || !route || !statement || !heading) return;
 
     const heroImage = art.querySelector("img");
@@ -144,7 +145,8 @@ export default function ScrollJourney({ children }) {
         lastTextProgress = textProgress;
         words.forEach((word, index) => {
           const reveal = clamp(textProgress * (words.length + 0.5) - index);
-          word.style.setProperty("--word-opacity", (0.46 + reveal * 0.54).toFixed(3));
+          const restingOpacity = editorialReveal ? 0.2 : 0.46;
+          word.style.setProperty("--word-opacity", (restingOpacity + reveal * (1 - restingOpacity)).toFixed(3));
         });
       }
     }

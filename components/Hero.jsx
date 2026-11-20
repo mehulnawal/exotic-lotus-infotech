@@ -51,7 +51,8 @@ export default function Hero({ secondaryAction = false }) {
           </a>
           {secondaryAction && (
             <a className="hero-secondary-link" href="#core-services">
-              Our Services <span aria-hidden="true">↗</span>
+              <span className="hero-secondary-label">Our Services</span>
+              <span className="hero-secondary-arrow" aria-hidden="true">↗</span>
             </a>
           )}
         </div>

@@ -1433,6 +1433,7 @@ body {
 /* Local hero exploration: the waves stay while the lotus follows the scroll route. */
 .draft-three .hero-wave-stage {
   position: relative;
+  background: linear-gradient(110deg, #faf7f2 6%, #fbf7f6 52%, #f8f1fb 100%);
 }
 
 .draft-three .hero-wave-backdrop {
@@ -1445,22 +1446,76 @@ body {
   display: none;
 }
 
+.draft-three .hero-wave-backdrop-mobile {
+  display: block;
+}
+
+.draft-three .hero {
+  position: relative;
+  background: transparent;
+}
+
+.draft-three .hero-image {
+  filter: saturate(0.68) brightness(1.12);
+}
+
 .draft-three .hero-secondary-link {
-  display: none;
+  min-height: 52px;
+  margin-left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #342449;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  animation: hero-rise 720ms 310ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.draft-three .hero-secondary-label {
+  padding-bottom: 3px;
+  border-bottom: 1px solid currentColor;
+}
+
+.draft-three .hero-secondary-arrow {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.draft-three .statement-inner {
+  padding-top: clamp(30px, 3.4vw, 52px);
+  padding-bottom: clamp(46px, 5vw, 72px);
+}
+
+.draft-three .statement-eyebrow {
+  margin-bottom: 22px;
+}
+
+.draft-three .statement-heading {
+  width: 100%;
+  max-width: 1460px;
+  color: #322f25;
+  font-family: var(--font-editorial), Georgia, serif;
+  font-size: clamp(3rem, 4.4vw, 4.75rem);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  text-align: left;
+  text-wrap: wrap;
+}
+
+.draft-three .statement-heading.is-ready [data-reveal-word] {
+  color: rgba(50, 47, 37, var(--word-opacity, 0.2));
 }
 
 @media (min-width: 900px) {
-  .draft-three .hero-wave-stage {
-    background: linear-gradient(110deg, #faf7f2 6%, #fbf7f6 52%, #f8f1fb 100%);
-  }
-
   .draft-three .hero-wave-backdrop {
     display: block;
   }
 
-  .draft-three .hero {
-    position: relative;
-    background: transparent;
+  .draft-three .hero-wave-backdrop-mobile {
+    display: none;
   }
 
   .draft-three .hero-inner {
@@ -1490,27 +1545,33 @@ body {
     margin-left: -48%;
   }
 
-  .draft-three .hero-image {
-    filter: saturate(0.68) brightness(1.12);
-  }
-
   .draft-three .hero-secondary-link {
-    min-height: 52px;
     margin-left: 26px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    color: #342449;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 5px;
-    animation: hero-rise 720ms 310ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .draft-three .hero-secondary-link span {
-    font-size: 18px;
-    font-weight: 400;
-    text-decoration: none;
+  .draft-three .services-inner {
+    padding-bottom: clamp(24px, 2.8vw, 36px);
+  }
+
+  .draft-three .statement-inner {
+    width: min(100% - 10vw, 1550px);
+  }
+}
+
+@media (max-width: 700px) {
+  .draft-three .hero-secondary-link {
+    min-height: 48px;
+    margin-left: 14px;
+    font-size: 13px;
+  }
+
+  .draft-three .statement-inner {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+
+  .draft-three .statement-heading {
+    font-size: clamp(1.85rem, 7.2vw, 2.8rem);
+    line-height: 1.1;
   }
 }

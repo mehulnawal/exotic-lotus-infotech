@@ -4,6 +4,14 @@ import CoreServices from "../../components/CoreServices";
 import ScrollJourney from "../../components/ScrollJourney";
 import ScrollRevealStatement from "../../components/ScrollRevealStatement";
 import SiteFooter from "../../components/SiteFooter";
+import { Newsreader } from "next/font/google";
+
+const editorialFont = Newsreader({
+  subsets: ["latin"],
+  weight: "300",
+  variable: "--font-editorial",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Hero Draft 3 | Exotic Lotus Infotech",
@@ -11,7 +19,7 @@ export const metadata = {
 
 export default function HeroDraftPage() {
   return (
-    <div id="top" className="site-shell draft-two draft-three">
+    <div id="top" className={`site-shell draft-two draft-three ${editorialFont.variable}`}>
       <SiteHeader />
       <main className="page-canvas" aria-label="Homepage content">
         <ScrollJourney>
