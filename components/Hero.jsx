@@ -1,6 +1,6 @@
 import { getImageProps } from "next/image";
 
-export default function Hero() {
+export default function Hero({ secondaryAction = false }) {
   const commonImageProps = {
     alt: "",
     sizes: "(max-width: 899px) 100vw, (max-width: 1400px) 75vw, 980px",
@@ -49,6 +49,11 @@ export default function Hero() {
             Start a Project
             <span aria-hidden="true">↗</span>
           </a>
+          {secondaryAction && (
+            <a className="hero-secondary-link" href="#core-services">
+              Our Services <span aria-hidden="true">↗</span>
+            </a>
+          )}
         </div>
 
         <div className="hero-art" aria-hidden="true">
