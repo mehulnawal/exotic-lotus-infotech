@@ -1216,7 +1216,8 @@ body {
   .draft-two .statement-heading {
     width: 100%;
     max-width: none;
-    text-align: center;
+    font-size: clamp(1.55rem, 6.6vw, 2.2rem);
+    text-align: left;
     text-wrap: wrap;
   }
 
