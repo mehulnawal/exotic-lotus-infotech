@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AboutIntroReveal from "./AboutIntroReveal";
+import SectionCarousel from "./SectionCarousel";
 
 const strengths = [
   {
@@ -179,19 +180,19 @@ export default function CompanySections() {
         <div className="company-container">
           <SectionIntro eyebrow="Our values" title="Good work should feel good to use." id="values-heading" />
           <div className="company-value-grid">
-            {reasons.map(({ title, description }, index) => (
-              <article key={title} data-motion style={{ "--motion-delay": `${index * 70}ms` }}>
+            {reasons.map(({ title, description }) => (
+              <article key={title}>
                 <h3>{title}</h3>
                 <p>{description}</p>
               </article>
             ))}
           </div>
-          <div className="recognitions-heading" data-motion>
+          <div className="recognitions-heading">
             <p className="company-eyebrow">Recognition</p>
             <h3>Registered to build with confidence.</h3>
           </div>
           <div className="company-recognitions" aria-label="Registrations and recognition">
-            <article className="recognition-card" data-motion>
+            <article className="recognition-card">
               <div className="recognition-card-top">
                 <Image src="/recognition/startup-india.webp" width={200} height={80} alt="DPIIT Startup India" className="recognition-logo startup-logo" />
                 <span className="recognition-mark" aria-hidden="true">✦</span>
@@ -201,7 +202,7 @@ export default function CompanySections() {
               <p className="recognition-description">Recognized as a startup by the Department for Promotion of Industry and Internal Trade (DPIIT), Ministry of Commerce &amp; Industry, Government of India. This recognition reflects a commitment to innovation, technology development and job creation.</p>
               <div className="recognition-card-bottom"><span>Ministry of Commerce &amp; Industry</span><strong>Active recognition</strong></div>
             </article>
-            <article className="recognition-card" data-motion style={{ "--motion-delay": "70ms" }}>
+            <article className="recognition-card">
               <div className="recognition-card-top">
                 <Image src="/recognition/msme.svg" width={3000} height={3000} alt="Ministry of MSME Udyam registration seal" className="recognition-logo msme-logo" unoptimized />
                 <span className="recognition-mark" aria-hidden="true">✓</span>
@@ -218,9 +219,9 @@ export default function CompanySections() {
       <section className="company-capabilities" id="capabilities" aria-labelledby="capabilities-heading">
         <div className="company-container">
           <SectionIntro
-            eyebrow="What we do"
+            eyebrow="Behind the services"
             title="The right expertise for the whole product."
-            description="From an early technical plan to a shipped application, we bring the right skills together around the work."
+            description="The specialist skills behind our services, from an early technical plan to a shipped application."
             id="capabilities-heading"
           />
           <div className="capability-grid">
@@ -234,17 +235,55 @@ export default function CompanySections() {
         </div>
       </section>
 
+      <section className="company-portfolio" id="portfolio" aria-labelledby="portfolio-heading">
+        <div className="company-container">
+          <SectionIntro
+            eyebrow="Selected work"
+            title="Different challenges. Useful outcomes."
+            description="Client projects across employee experience, commerce, caregiving and voice workflows."
+            id="portfolio-heading"
+          />
+          <SectionCarousel className="portfolio-featured" label="Selected work" count={featuredWork.length}>
+            {featuredWork.map(({ name, category, description, stack }, index) => (
+              <article className="portfolio-feature" key={name}>
+                <div className="portfolio-feature-top"><span className="company-small-index">0{index + 1}</span><span>{category}</span></div>
+                <div className={`portfolio-feature-art portfolio-feature-art-${index + 1}`} aria-hidden="true"><span /><span /><span /></div>
+                <h3>{name}</h3>
+                <p>{description}</p>
+                <span className="portfolio-stack">{stack}</span>
+              </article>
+            ))}
+          </SectionCarousel>
+          <h3 className="portfolio-more-heading">More of our work <span>{moreWork.length} projects</span></h3>
+          <div className="portfolio-directory">
+            {moreWork.slice(0, 5).map(([name, category, stack]) => (
+              <div className="portfolio-directory-row" key={name}>
+                <strong>{name}</strong><span>{category}</span><span>{stack}</span>
+              </div>
+            ))}
+            <details className="portfolio-more-details">
+              <summary><span className="show-more">View all {moreWork.length} projects</span><span className="show-less">Show fewer projects</span></summary>
+              {moreWork.slice(5).map(([name, category, stack]) => (
+                <div className="portfolio-directory-row" key={name}>
+                  <strong>{name}</strong><span>{category}</span><span>{stack}</span>
+                </div>
+              ))}
+            </details>
+          </div>
+        </div>
+      </section>
+
       <section className="company-products" id="products" aria-labelledby="products-heading">
         <div className="company-container">
           <SectionIntro
             eyebrow="Our products"
             title="Ideas we turned into products."
-            description="Five focused platforms built for everyday needs, from local commerce to AI-assisted sales."
+            description="Five products of our own, built for everyday needs from local commerce to AI-assisted sales."
             id="products-heading"
           />
-          <div className="product-grid">
+          <SectionCarousel className="product-grid" label="Our products" count={products.length}>
             {products.map(({ name, category, description, highlights }, index) => (
-              <article className="product-card" key={name} data-motion style={{ "--motion-delay": `${(index % 3) * 65}ms` }}>
+              <article className="product-card" key={name}>
                 <div className="product-card-top">
                   <span className="company-small-index">0{index + 1} / 05</span>
                   <span className="product-symbol" aria-hidden="true">{name.slice(0, 1)}</span>
@@ -255,37 +294,7 @@ export default function CompanySections() {
                 <ul>{highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="company-portfolio" id="portfolio" aria-labelledby="portfolio-heading">
-        <div className="company-container">
-          <SectionIntro
-            eyebrow="Selected work"
-            title="Different challenges. Useful outcomes."
-            description="A selection of applications, platforms and voice experiences built across teams and industries."
-            id="portfolio-heading"
-          />
-          <div className="portfolio-featured">
-            {featuredWork.map(({ name, category, description, stack }, index) => (
-              <article className="portfolio-feature" key={name} data-motion style={{ "--motion-delay": `${(index % 2) * 70}ms` }}>
-                <div className="portfolio-feature-top"><span className="company-small-index">0{index + 1}</span><span>{category}</span></div>
-                <div className={`portfolio-feature-art portfolio-feature-art-${index + 1}`} aria-hidden="true"><span /><span /><span /></div>
-                <h3>{name}</h3>
-                <p>{description}</p>
-                <span className="portfolio-stack">{stack}</span>
-              </article>
-            ))}
-          </div>
-          <h3 className="portfolio-more-heading" data-motion>More of our work <span>16 projects</span></h3>
-          <div className="portfolio-directory">
-            {moreWork.map(([name, category, stack]) => (
-              <div className="portfolio-directory-row" key={name} data-motion>
-                <strong>{name}</strong><span>{category}</span><span>{stack}</span>
-              </div>
-            ))}
-          </div>
+          </SectionCarousel>
         </div>
       </section>
 
@@ -305,6 +314,14 @@ export default function CompanySections() {
               </li>
             ))}
           </ol>
+          <div className="process-next-step">
+            <div>
+              <p className="company-eyebrow">Next step</p>
+              <h3>Have a project in mind?</h3>
+              <p>Tell us what you want to build. We can start with the problem, the people it serves and a practical way forward.</p>
+            </div>
+            <a href="https://www.instagram.com/exoticlotus.tech/" target="_blank" rel="noopener noreferrer">Discuss a project <span>via Instagram</span></a>
+          </div>
         </div>
       </section>
     </>

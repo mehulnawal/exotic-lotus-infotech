@@ -53,7 +53,7 @@ export default async function ArticlePage({ params }) {
                 {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 {section.quote && <blockquote>{section.quote}</blockquote>}
                 {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
-                {section.platformLink && <a className="blog-platform-link" href={section.platformLink.href} target="_blank" rel="noopener noreferrer">{section.platformLink.label} <span aria-hidden="true">↗</span></a>}
+                {section.platformLink && <Link className="blog-platform-link" href={section.platformLink.href}>{section.platformLink.label} <span aria-hidden="true">↗</span></Link>}
                 {section.table && (
                   <div className="blog-table-scroll" role="region" tabIndex="0" aria-label="Technology cost comparison">
                     <table><thead><tr>{section.table.columns.map((column) => <th scope="col" key={column}>{column}</th>)}</tr></thead>

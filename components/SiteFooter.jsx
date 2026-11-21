@@ -104,8 +104,8 @@ export default function SiteFooter({ refined = false, editorialMobile = false, c
             <HomeLink href={`${homePrefix}#core-services`}>{refined ? "Services" : "Core Services"}</HomeLink>
             {!complete && <a href="#why-we-build">{refined ? "Our approach" : "Why We Build"}</a>}
             {complete && <HomeLink href={`${homePrefix}#about`}>About</HomeLink>}
-            {complete && <HomeLink href={`${homePrefix}#products`}>Products</HomeLink>}
             {complete && <HomeLink href={`${homePrefix}#portfolio`}>Work</HomeLink>}
+            {complete && <HomeLink href={`${homePrefix}#products`}>Products</HomeLink>}
             {complete && <HomeLink href={`${homePrefix}#process`}>Process</HomeLink>}
             {complete && <Link href="/blog">Blog</Link>}
             {editorialMobile && <span className="footer-mobile-label">Connect</span>}
