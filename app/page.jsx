@@ -1,5 +1,5 @@
-import CurrentHome from "../components/CurrentHome";
+import CompleteHome from "../components/CompleteHome";
 
 export default function HomePage() {
-  return <CurrentHome />;
+  return <CompleteHome />;
 }

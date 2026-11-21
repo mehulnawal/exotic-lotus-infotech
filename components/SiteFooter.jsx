@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 const name = "EXOTIC";
 
-export default function SiteFooter({ refined = false, editorialMobile = false }) {
+export default function SiteFooter({ refined = false, editorialMobile = false, complete = false, blogPage = false }) {
   const footerRef = useRef(null);
+  const homePrefix = blogPage ? "/" : "";
+  const HomeLink = blogPage ? Link : "a";
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -98,8 +101,13 @@ export default function SiteFooter({ refined = false, editorialMobile = false })
           <p>© {new Date().getFullYear()} Exotic Lotus Infotech</p>
           <nav className="footer-links" aria-label="Footer links">
             {editorialMobile && <span className="footer-mobile-label">Explore</span>}
-            <a href="#core-services">{refined ? "Services" : "Core Services"}</a>
-            <a href="#why-we-build">{refined ? "Our approach" : "Why We Build"}</a>
+            <HomeLink href={`${homePrefix}#core-services`}>{refined ? "Services" : "Core Services"}</HomeLink>
+            {!complete && <a href="#why-we-build">{refined ? "Our approach" : "Why We Build"}</a>}
+            {complete && <HomeLink href={`${homePrefix}#about`}>About</HomeLink>}
+            {complete && <HomeLink href={`${homePrefix}#products`}>Products</HomeLink>}
+            {complete && <HomeLink href={`${homePrefix}#portfolio`}>Work</HomeLink>}
+            {complete && <HomeLink href={`${homePrefix}#process`}>Process</HomeLink>}
+            {complete && <Link href="/blog">Blog</Link>}
             {editorialMobile && <span className="footer-mobile-label">Connect</span>}
             <a href="https://www.instagram.com/exoticlotus.tech/" target="_blank" rel="noopener noreferrer">
               Instagram <span aria-hidden="true">↗</span>

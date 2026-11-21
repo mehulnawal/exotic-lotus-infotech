@@ -1,6 +1,6 @@
 import Hero from "./Hero";
 
-export default function HeroWave() {
+export default function HeroWave({ showStats = false }) {
   return (
     <div className="hero-wave-stage">
       <svg
@@ -68,7 +68,7 @@ export default function HeroWave() {
           fill="url(#hero-wave-mobile-front)"
         />
       </svg>
-      <Hero secondaryAction />
+      <Hero secondaryAction showStats={showStats} />
     </div>
   );
 }

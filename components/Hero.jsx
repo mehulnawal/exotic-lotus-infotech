@@ -1,6 +1,7 @@
 import { getImageProps } from "next/image";
+import CompanyStats from "./CompanyStats";
 
-export default function Hero({ secondaryAction = false }) {
+export default function Hero({ secondaryAction = false, showStats = false }) {
   const commonImageProps = {
     alt: "",
     sizes: "(max-width: 899px) 100vw, (max-width: 1400px) 75vw, 980px",
@@ -73,6 +74,7 @@ export default function Hero({ secondaryAction = false }) {
           </picture>
         </div>
       </div>
+      {showStats && <div className="hero-stats"><CompanyStats /></div>}
     </section>
   );
 }

@@ -14,7 +14,7 @@ function quickApproach(progress, strength) {
   return (1 - Math.exp(-strength * progress)) / (1 - Math.exp(-strength));
 }
 
-export default function ScrollJourney({ children }) {
+export default function ScrollJourney({ children, hasStatement = true }) {
   const sceneRef = useRef(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ScrollJourney({ children }) {
     const words = Array.from(heading?.querySelectorAll("[data-reveal-word]") ?? []);
     const rows = Array.from(scene?.querySelectorAll("[data-service-row]") ?? []);
     const editorialReveal = Boolean(scene?.closest(".draft-three"));
-    if (!scene || !art || !flow || !route || !statement || !heading) return;
+    if (!scene || !art || !flow || !route || (hasStatement && (!statement || !heading))) return;
 
     const heroImage = art.querySelector("img");
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -43,7 +43,7 @@ export default function ScrollJourney({ children }) {
     function reset() {
       geometry = null;
       scene.classList.remove("is-journey-ready");
-      heading.classList.remove("is-ready");
+      heading?.classList.remove("is-ready");
       art.style.transform = "";
       art.style.opacity = "";
       route.style.strokeDashoffset = motionPreference.matches ? "0" : "";
@@ -93,7 +93,7 @@ export default function ScrollJourney({ children }) {
         x = geometry.flowX + point.x;
         y = geometry.flowY + point.y;
         scale = geometry.markerScale;
-      } else if (mobile && scroll >= geometry.routeEnd) {
+      } else if ((mobile || !hasStatement) && scroll >= geometry.routeEnd) {
         const progress = clamp((scroll - geometry.routeEnd) / (geometry.exitEnd - geometry.routeEnd));
         x = geometry.lastX;
         y = geometry.lastY - 24 * progress;
@@ -137,17 +137,19 @@ export default function ScrollJourney({ children }) {
         detail.style.transform = `translate3d(0, ${((1 - reveal) * 18).toFixed(2)}px, 0)`;
       });
 
-      const headingTop = geometry.headingTop - scroll;
-      const start = window.innerHeight * 0.82;
-      const end = window.innerHeight * (mobile ? 0.42 : 0.3);
-      const textProgress = clamp((start - headingTop) / (start - end));
-      if (Math.abs(textProgress - lastTextProgress) >= 0.002) {
-        lastTextProgress = textProgress;
-        words.forEach((word, index) => {
-          const reveal = clamp(textProgress * (words.length + 0.5) - index);
-          const restingOpacity = editorialReveal ? 0.2 : 0.46;
-          word.style.setProperty("--word-opacity", (restingOpacity + reveal * (1 - restingOpacity)).toFixed(3));
-        });
+      if (heading) {
+        const headingTop = geometry.headingTop - scroll;
+        const start = window.innerHeight * 0.82;
+        const end = window.innerHeight * (mobile ? 0.42 : 0.3);
+        const textProgress = clamp((start - headingTop) / (start - end));
+        if (Math.abs(textProgress - lastTextProgress) >= 0.002) {
+          lastTextProgress = textProgress;
+          words.forEach((word, index) => {
+            const reveal = clamp(textProgress * (words.length + 0.5) - index);
+            const restingOpacity = editorialReveal ? 0.2 : 0.46;
+            word.style.setProperty("--word-opacity", (restingOpacity + reveal * (1 - restingOpacity)).toFixed(3));
+          });
+        }
       }
     }
 
@@ -187,8 +189,8 @@ export default function ScrollJourney({ children }) {
 
       const sceneRect = scene.getBoundingClientRect();
       const flowRect = flow.getBoundingClientRect();
-      const statementRect = statement.getBoundingClientRect();
-      const headingRect = heading.getBoundingClientRect();
+      const statementRect = statement?.getBoundingClientRect();
+      const headingRect = heading?.getBoundingClientRect();
       const pathLength = route.getTotalLength();
       if (!pathLength || !artRect.width) return;
 
@@ -208,12 +210,14 @@ export default function ScrollJourney({ children }) {
       const firstY = flowY + first.y;
       const lastX = flowX + last.x;
       const lastY = flowY + last.y;
-      const whyX = statementRect.right - sceneRect.left - (mobile ? 80 : 180);
-      const whyY = mobile
-        ? headingRect.bottom - sceneRect.top + 42
-        : statementRect.top - sceneRect.top + statementRect.height * 0.52;
-      const statementTop = statementRect.top + window.scrollY;
-      const statementBottom = statementRect.bottom + window.scrollY;
+      const whyX = statementRect ? statementRect.right - sceneRect.left - (mobile ? 80 : 180) : lastX;
+      const whyY = statementRect
+        ? mobile
+          ? headingRect.bottom - sceneRect.top + 42
+          : statementRect.top - sceneRect.top + statementRect.height * 0.52
+        : lastY;
+      const statementTop = statementRect ? statementRect.top + window.scrollY : routeEnd;
+      const statementBottom = statementRect ? statementRect.bottom + window.scrollY : routeEnd;
       const whyArrive = Math.max(routeEnd + 100, statementTop - window.innerHeight * 0.3);
       const whyDepart = Math.max(whyArrive + 80, statementBottom - window.innerHeight * 0.62);
       const mobileExitEnd = Math.max(routeEnd + 100, statementTop - window.innerHeight * 0.78);
@@ -233,7 +237,7 @@ export default function ScrollJourney({ children }) {
         lastY,
         whyX,
         whyY,
-        headingTop: headingRect.top + window.scrollY,
+        headingTop: headingRect ? headingRect.top + window.scrollY : null,
         rowTops: rows.map((row) => row.getBoundingClientRect().top + window.scrollY),
         pathLength,
         mobile,
@@ -247,11 +251,13 @@ export default function ScrollJourney({ children }) {
         routeEnd,
         whyArrive,
         whyDepart,
-        exitEnd: mobile ? mobileExitEnd : Math.max(whyDepart + 50, statementBottom - window.innerHeight * 0.47),
+        exitEnd: !hasStatement
+          ? routeEnd + Math.max(140, window.innerHeight * 0.28)
+          : mobile ? mobileExitEnd : Math.max(whyDepart + 50, statementBottom - window.innerHeight * 0.47),
       };
 
       scene.classList.add("is-journey-ready");
-      heading.classList.add("is-ready");
+      heading?.classList.add("is-ready");
       lastTextProgress = -1;
       lastActiveRows = -1;
       lastRowReveals = [];
@@ -267,7 +273,7 @@ export default function ScrollJourney({ children }) {
     const resizeObserver = new ResizeObserver(scheduleMeasure);
     resizeObserver.observe(art);
     resizeObserver.observe(flow);
-    resizeObserver.observe(statement);
+    if (statement) resizeObserver.observe(statement);
     const header = scene.closest(".site-shell")?.querySelector(".site-header");
     if (header) resizeObserver.observe(header);
     scheduleMeasure();
@@ -286,7 +292,7 @@ export default function ScrollJourney({ children }) {
       motionPreference.removeEventListener("change", scheduleMeasure);
       reset();
     };
-  }, []);
+  }, [hasStatement]);
 
   return <div className="scroll-journey" ref={sceneRef}>{children}</div>;
 }

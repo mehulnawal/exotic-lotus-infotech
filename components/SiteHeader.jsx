@@ -1,11 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-const futurePages = ["About", "Services", "Contact"];
+const pageSections = [
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#core-services" },
+  { label: "Products", href: "#products" },
+  { label: "Work", href: "#portfolio" },
+  { label: "Process", href: "#process" },
+];
 
-export default function SiteHeader() {
+export default function SiteHeader({ complete = false, blogPage = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const homePrefix = blogPage ? "/" : "";
+  const HomeLink = blogPage ? Link : "a";
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -21,13 +30,13 @@ export default function SiteHeader() {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <a
+        <HomeLink
           className="brand-link"
-          href="#top"
+          href={blogPage ? "/" : "#top"}
           onClick={() => setMenuOpen(false)}
         >
           <span className="brand-wordmark">Exotic Lotus Infotech</span>
-        </a>
+        </HomeLink>
 
         <button
           className="menu-toggle"
@@ -46,14 +55,15 @@ export default function SiteHeader() {
           aria-label="Primary navigation"
         >
           <div className="navigation-content">
-            <a className="nav-item is-current" href="#top" aria-current="page" onClick={() => setMenuOpen(false)}>
+            <HomeLink className={`nav-item${blogPage ? "" : " is-current"}`} href={blogPage ? "/" : "#top"} aria-current={blogPage ? undefined : "page"} onClick={() => setMenuOpen(false)}>
               Home
-            </a>
-            {futurePages.map((label) => (
-              <span className="nav-item is-planned" aria-disabled="true" title="Planned for a later phase" key={label}>
-                {label}
-              </span>
+            </HomeLink>
+            {complete && pageSections.map(({ label, href }) => blogPage ? (
+              <Link className="nav-item" href={`${homePrefix}${href}`} key={href} onClick={() => setMenuOpen(false)}>{label}</Link>
+            ) : (
+              <a className="nav-item" href={href} key={href} onClick={() => setMenuOpen(false)}>{label}</a>
             ))}
+            {complete && <Link className={`nav-item${blogPage ? " is-current" : ""}`} href="/blog" aria-current={blogPage ? "page" : undefined} onClick={() => setMenuOpen(false)}>Blog</Link>}
           </div>
         </nav>
       </div>
